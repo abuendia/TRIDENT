@@ -23,6 +23,7 @@ from trident.patch_encoder_models.load import (
     KaikoS8InferenceEncoder,
     KaikoL14InferenceEncoder,
     Midnight12kInferenceEncoder,
+    PLIPInferenceEncoder,
 )
 
 __all__ = [

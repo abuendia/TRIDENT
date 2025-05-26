@@ -202,6 +202,38 @@ class CustomInferenceEncoder(BasePatchEncoder):
         return None, None, None
 
 
+class PLIPInferenceEncoder(BasePatchEncoder):
+
+    def __init__(self, enc_name, model, transforms, precision):
+        """
+        Initialize a CustomInferenceEncoder from user-defined components.
+
+        This class is used when the model, transforms, and precision are pre-instantiated externally 
+        and should be injected directly into the encoder wrapper.
+
+        Args:
+            enc_name (str): 
+                A unique name or identifier for the encoder (used for registry or logging).
+            model (torch.nn.Module): 
+                A PyTorch model instance to use for inference.
+            transforms (Callable): 
+                A callable (e.g., torchvision or timm transform) to preprocess input images for evaluation.
+            precision (torch.dtype): 
+                The precision to use for inference (e.g., torch.float32, torch.float16).
+        """
+        super().__init__()
+        self.enc_name = enc_name
+        self.model = model
+        self.eval_transforms = transforms
+        self.precision = precision
+        
+    def _build(self):
+        return None, None, None
+    
+    def forward(self, x):
+        return self.model.encode_images(x, batch_size=32)
+
+
 class MuskInferenceEncoder(BasePatchEncoder):
     
     def __init__(self, **build_kwargs):

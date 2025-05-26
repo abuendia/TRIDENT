@@ -313,7 +313,7 @@ class WSI:
         precision = segmentation_model.precision
         eval_transforms = segmentation_model.eval_transforms
         dataset = WSIPatcherDataset(patcher, eval_transforms)
-        dataloader = DataLoader(dataset, batch_size=batch_size, num_workers=get_num_workers(batch_size, max_workers=self.max_workers), pin_memory=True)
+        dataloader = DataLoader(dataset, batch_size=batch_size, num_workers=8, pin_memory=True) # get_num_workers(batch_size, max_workers=self.max_workers)
         # dataloader = DataLoader(dataset, batch_size=batch_size, num_workers=0, pin_memory=True)
 
         mpp_reduction_factor = self.mpp / destination_mpp

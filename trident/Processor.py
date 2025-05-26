@@ -304,6 +304,8 @@ class Processor:
                 if self.skip_errors:
                     update_log(os.path.join(self.job_dir, '_logs_segmentation.txt'), f'{wsi.name}{wsi.ext}', f'ERROR: {e}')
                     continue
+                elif isinstance(e, RuntimeError) and 'Failed to initialize WSI with OpenSlide' in str(e):
+                    continue
                 else:
                     raise e
                 
